@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+/* Swiper Custom Styles */
+.swiper-pagination-custom {
+  position: static !important;
+  display: flex !important;
+  gap: 0.5rem;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet {
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  background: #d1d5db !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  background: #6b7280 !important;
+  transform: scale(1.2);
+}
+
+/* Enhanced Fade Effect with Animation */
+.testimonial-swiper {
+  overflow: hidden;
+}
+
+.testimonial-swiper .swiper-wrapper {
+  position: relative;
+}
+
+.testimonial-swiper .swiper-slide {
+  opacity: 0 !important;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform: translateY(15px) scale(0.98);
+  pointer-events: none;
+}
+
+.testimonial-swiper .swiper-slide-active {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.testimonial-swiper .swiper-slide-prev,
+.testimonial-swiper .swiper-slide-next {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Fade transition animation for content */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.testimonial-swiper .swiper-slide-active > div {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
