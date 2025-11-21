@@ -1,10 +1,19 @@
-import { BookingFormData, WorkspaceOption, AddOn } from '@/types/booking'
+import { BookingFormData, AddOn } from '@/types/booking'
 
-const workspaceOptions: Record<string, WorkspaceOption> = {
+interface WorkspacePricing {
+  id: string
+  name: string
+  dailyPrice: number
+  weeklyPrice?: number
+  monthlyPrice: number
+  hourlyPrice?: number
+  description: string
+}
+
+const workspaceOptions: Record<string, WorkspacePricing> = {
   'hot-desk': {
     id: 'hot-desk',
     name: 'Hot Desk',
-    icon: <></>,
     dailyPrice: 200,
     weeklyPrice: 1000,
     monthlyPrice: 4000,
@@ -13,7 +22,6 @@ const workspaceOptions: Record<string, WorkspaceOption> = {
   'dedicated-desk': {
     id: 'dedicated-desk',
     name: 'Dedicated Desk',
-    icon: <></>,
     dailyPrice: 250,
     monthlyPrice: 5000,
     description: 'Your own reserved desk',
@@ -21,7 +29,6 @@ const workspaceOptions: Record<string, WorkspaceOption> = {
   'private-cabin': {
     id: 'private-cabin',
     name: 'Private Cabin',
-    icon: <></>,
     dailyPrice: 600,
     monthlyPrice: 12000,
     description: '2-3 seater private office',
@@ -29,7 +36,6 @@ const workspaceOptions: Record<string, WorkspaceOption> = {
   'meeting-room': {
     id: 'meeting-room',
     name: 'Meeting Room',
-    icon: <></>,
     hourlyPrice: 500,
     dailyPrice: 3000,
     monthlyPrice: 0,
@@ -38,7 +44,6 @@ const workspaceOptions: Record<string, WorkspaceOption> = {
   'phone-booth': {
     id: 'phone-booth',
     name: 'Phone Booth',
-    icon: <></>,
     dailyPrice: 0,
     monthlyPrice: 0,
     description: 'Free for members',

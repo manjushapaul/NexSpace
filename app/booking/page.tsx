@@ -134,6 +134,7 @@ export default function Booking() {
   // Calculate price whenever form data changes
   useEffect(() => {
     calculatePrice()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     formData.workspaceType,
     formData.seats,

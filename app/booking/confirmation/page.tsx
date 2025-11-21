@@ -5,9 +5,10 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
 
-export default function BookingConfirmation() {
+function BookingConfirmationContent() {
   const searchParams = useSearchParams()
   const bookingRef = searchParams.get('ref') || 'NEX-00000000'
   const heroRef = useScrollAnimation()
@@ -235,6 +236,22 @@ export default function BookingConfirmation() {
 
       <Footer />
     </main>
+  )
+}
+
+export default function BookingConfirmation() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen">
+        <Header />
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-black">Loading...</p>
+        </div>
+        <Footer />
+      </main>
+    }>
+      <BookingConfirmationContent />
+    </Suspense>
   )
 }
 
