@@ -29,21 +29,21 @@ export default function Footer() {
   }
 
   const sitemapLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#workspace', label: 'Workspace' },
-    { href: '#review', label: 'Review' },
+    { href: '/about-us', label: 'About' },
+    { href: '/workspace', label: 'Workspace' },
+    { href: '/contact', label: 'Contact Us' },
   ]
 
   const communityLinks = [
-    { href: '#faq', label: 'FAQ' },
-    { href: '#twitter', label: 'Twitter' },
-    { href: '#facebook', label: 'Facebook' },
+    { href: '/#faq', label: 'FAQ' },
+    { href: 'https://twitter.com/nexspace', label: 'Twitter', external: true },
+    { href: 'https://facebook.com/nexspace', label: 'Facebook', external: true },
   ]
 
   const socialLinks = [
-    { href: '#instagram', label: 'Instagram' },
-    { href: '#twitter', label: 'Twitter' },
-    { href: '#facebook', label: 'Facebook' },
+    { href: 'https://instagram.com/nexspace', label: 'Instagram', external: true },
+    { href: 'https://twitter.com/nexspace', label: 'Twitter', external: true },
+    { href: 'https://facebook.com/nexspace', label: 'Facebook', external: true },
   ]
 
   return (
@@ -60,7 +60,7 @@ export default function Footer() {
             NEXSPACE®
           </h2>
           <Link
-            href="#book-now"
+            href="/booking"
             className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white underline hover:opacity-80 transition-opacity"
             aria-label="Book now"
           >
@@ -102,6 +102,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
                     className="text-sm sm:text-base text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
@@ -121,6 +123,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
                     className="text-sm sm:text-base text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}

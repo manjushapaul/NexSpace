@@ -53,6 +53,7 @@ export default function QuestionsFAQ() {
 
   return (
     <section
+      id="faq"
       ref={ref}
       className={`w-full bg-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 transition-all duration-700 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'

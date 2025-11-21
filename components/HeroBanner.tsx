@@ -29,7 +29,7 @@ export default function HeroBanner() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-banner.jpg"
+          src="/images/hero-banner.jpg"
           alt="Modern office workspace"
           fill
           priority
@@ -50,7 +50,7 @@ export default function HeroBanner() {
 
         {/* Slogans */}
         <div className="w-full max-w-5xl flex flex-col sm:flex-row items-center justify-between mb-10 sm:mb-10 px-4">
-          <p className="text-white text-lg sm:text-xl md:text-2xl font-light mb-4 sm:mb-0">
+          <p className="text-white text-lg sm:text-xl md:text-2xl font-light mb-4 sm:mb-0 ">
             Your exclusive space
           </p>
           <p className="text-white text-lg sm:text-xl md:text-2xl font-light">

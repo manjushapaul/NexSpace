@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
@@ -19,7 +20,7 @@ const spaces: SpaceCard[] = [
     id: '1',
     title: 'Ambarukmo Space',
     price: '₹5,400.55 / Day',
-    image: '/space-1.jpg',
+    image: '/images/space-1.jpg',
     wifi: '75 Mbps',
     seats: '50 Seat',
     area: '100 m²',
@@ -28,7 +29,7 @@ const spaces: SpaceCard[] = [
     id: '2',
     title: 'Commodities Space',
     price: '₹3000.00 / Day',
-    image: '/space-2.jpg',
+    image: '/images/space-2.jpg',
     wifi: '75 Mbps',
     seats: '50 Seat',
     area: '100 m²',
@@ -37,7 +38,7 @@ const spaces: SpaceCard[] = [
     id: '3',
     title: 'Equity Work & Cafe',
     price: '₹8000.80 / Day',
-    image: '/space-3.jpg',
+    image: '/images/space-3.jpg',
     wifi: '75 Mbps',
     seats: '50 Seat',
     area: '100 m²',
@@ -61,7 +62,7 @@ export default function ExploreSpace() {
             Explore Space
           </h2>
           <Link
-            href="/spaces"
+            href="/workspace#our-workspace-options"
             className="text-black text-base sm:text-lg font-medium hover:opacity-70 transition-opacity flex items-center gap-2"
           >
             See More

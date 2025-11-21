@@ -20,7 +20,7 @@ export default function AboutBlock() {
           font-normal leading-tight flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span>We&apos;re Building A Community</span>
             <Image
-              src="/community-image.jpg"
+              src="/images/community-image.jpg"
               alt="Community of professionals collaborating"
               width={180}
               height={40}
@@ -32,7 +32,7 @@ export default function AboutBlock() {
 
           {/* Line 2: "Professionals Who Inspire And Support Each Other." */}
           <p className="text-black  text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl
-           font-mormal leading-tight">
+           font-normal leading-tight">
             Professionals Who Inspire And Support Each Other.
           </p>
 
@@ -47,7 +47,7 @@ export default function AboutBlock() {
           font-light leading-tight flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <span>Creativity</span>
             <Image
-              src="/creativity-image.jpg"
+              src="/images/creativity-image.jpg"
               alt="Abstract creative design representing creativity and growth"
               width={180}
               height={80}

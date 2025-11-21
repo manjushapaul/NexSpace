@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, EffectFade } from 'swiper/modules'
@@ -25,7 +26,7 @@ const testimonials: Testimonial[] = [
     name: 'Alejandro Garnacho',
     title: 'UI Designer',
     company: 'Shopify',
-    image: '/testimonial-1.jpg',
+    image: '/images/testimonial-1.jpg',
   },
   {
     id: '2',
@@ -33,7 +34,7 @@ const testimonials: Testimonial[] = [
     name: 'Sarah Johnson',
     title: 'Product Manager',
     company: 'Google',
-    image: '/testimonial-2.jpg',
+    image: '/images/testimonial-2.jpg',
   },
   {
     id: '3',
@@ -41,7 +42,7 @@ const testimonials: Testimonial[] = [
     name: 'Michael Chen',
     title: 'Software Engineer',
     company: 'Microsoft',
-    image: '/testimonial-3.jpg',
+    image: '/images/testimonial-3.jpg',
   },
   {
     id: '4',
@@ -49,7 +50,7 @@ const testimonials: Testimonial[] = [
     name: 'Emma Rodriguez',
     title: 'Marketing Director',
     company: 'Adobe',
-    image: '/testimonial-1.jpg',
+    image: '/images/testimonial-1.jpg',
   },
   {
     id: '5',
@@ -57,7 +58,7 @@ const testimonials: Testimonial[] = [
     name: 'David Kim',
     title: 'UX Researcher',
     company: 'Meta',
-    image: '/testimonial-2.jpg',
+    image: '/images/testimonial-2.jpg',
   },
   {
     id: '6',
@@ -65,7 +66,7 @@ const testimonials: Testimonial[] = [
     name: 'Lisa Thompson',
     title: 'Startup Founder',
     company: 'TechVenture',
-    image: '/testimonial-3.jpg',
+    image: '/images/testimonial-3.jpg',
   },
   {
     id: '7',
@@ -73,7 +74,7 @@ const testimonials: Testimonial[] = [
     name: 'James Wilson',
     title: 'Data Scientist',
     company: 'Amazon',
-    image: '/testimonial-1.jpg',
+    image: '/images/testimonial-1.jpg',
   },
   {
     id: '8',
@@ -81,7 +82,7 @@ const testimonials: Testimonial[] = [
     name: 'Maria Garcia',
     title: 'Graphic Designer',
     company: 'Nike',
-    image: '/testimonial-2.jpg',
+    image: '/images/testimonial-2.jpg',
   },
   {
     id: '9',
@@ -89,7 +90,7 @@ const testimonials: Testimonial[] = [
     name: 'Robert Taylor',
     title: 'Consultant',
     company: 'McKinsey',
-    image: '/testimonial-3.jpg',
+    image: '/images/testimonial-3.jpg',
   },
 ]
 
@@ -99,7 +100,7 @@ export default function TestimonialSlider() {
   return (
     <section
       ref={ref}
-      className={`w-full bg-[#fafbfc] sm:pb-10 lg:pb-8 px-4 sm:px-6 lg:px-8 transition-all duration-700 ease-out ${
+      className={`w-full bg-[#fafbfc] py-10 lg:pb-8 px-4 sm:px-6 lg:px-8 transition-all duration-700 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
@@ -150,7 +151,8 @@ export default function TestimonialSlider() {
                       <div className="relative">
                         {/* Opening Quote SVG */}
                         
-                        <p className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-black font-normal leading-relaxed relative z-10 pl-8 lg:pl-16 pr-8 lg:pr-16">
+                        <p className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-black font-normal l
+                        eading-relaxed relative z-10 pl-8 lg:pl-16 pr-8 lg:pr-16 max-lg:p-0 max-lg:pt-5">
                         {testimonial.quote}
                        
                         
