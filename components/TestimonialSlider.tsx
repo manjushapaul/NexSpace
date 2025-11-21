@@ -140,6 +140,9 @@ export default function TestimonialSlider() {
                         alt={testimonial.name}
                         fill
                         className="object-cover"
+                        loading="lazy"
+                        quality={85}
+                        sizes="(max-width: 1024px) 100vw, 33vw"
                       />
                     </div>
                   </div>

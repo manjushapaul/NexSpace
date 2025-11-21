@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { memo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
@@ -45,7 +45,7 @@ const spaces: SpaceCard[] = [
   },
 ]
 
-export default function ExploreSpace() {
+function ExploreSpace() {
   const { ref, isVisible } = useScrollAnimation()
 
   return (
@@ -98,6 +98,8 @@ export default function ExploreSpace() {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
+                  loading="lazy"
+                  quality={85}
                 />
                 
                 {/* Floating Badges */}
@@ -183,3 +185,5 @@ export default function ExploreSpace() {
     </section>
   )
 }
+
+export default memo(ExploreSpace)

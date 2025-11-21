@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 
 interface WorkspaceCard {
   id: string
@@ -258,27 +258,27 @@ export default function Workspace() {
   const [selectedWorkspace, setSelectedWorkspace] = useState<WorkspaceCard | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const toggleFaq = (id: string) => {
+  const toggleFaq = useCallback((id: string) => {
     setOpenFaq((prev) => (prev === id ? null : id))
-  }
+  }, [])
 
-  const openModal = (workspace: WorkspaceCard) => {
+  const openModal = useCallback((workspace: WorkspaceCard) => {
     setSelectedWorkspace(workspace)
     // Trigger animation after a tiny delay to ensure DOM is ready
     setTimeout(() => {
       setIsModalOpen(true)
     }, 10)
     document.body.style.overflow = 'hidden'
-  }
+  }, [])
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsModalOpen(false)
     // Wait for animation to complete before removing from DOM
     setTimeout(() => {
       setSelectedWorkspace(null)
       document.body.style.overflow = 'unset'
     }, 300)
-  }
+  }, [])
 
   // Reset animation state when workspace changes
   useEffect(() => {
@@ -290,7 +290,7 @@ export default function Workspace() {
     }
   }, [selectedWorkspace])
 
-  const getTagIcon = (iconType: string) => {
+  const getTagIcon = useCallback((iconType: string) => {
     switch (iconType) {
       case 'wifi':
         return (
@@ -349,7 +349,7 @@ export default function Workspace() {
       default:
         return null
     }
-  }
+  }, [])
 
   return (
     <main className="min-h-screen">

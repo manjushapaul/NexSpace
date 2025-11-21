@@ -4,8 +4,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useScrollAnimation } from '@/hooks/useScrollAnimation'
+import { calculateTotalPrice } from '@/utils/calculatePrice'
 
 interface BookingFormData {
   fullName: string
@@ -131,10 +132,76 @@ export default function Booking() {
     total: 0,
   })
 
-  // Calculate price whenever form data changes
-  useEffect(() => {
-    calculatePrice()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Memoize price calculation to avoid unnecessary recalculations
+  const priceCalculation = useMemo(() => {
+    if (!formData.workspaceType || !formData.startDate) {
+      return {
+        basePrice: 0,
+        addOnsPrice: 0,
+        subtotal: 0,
+        gst: 0,
+        total: 0,
+        breakdown: {
+          workspace: '',
+          duration: '',
+          basePrice: 0,
+          addOns: [],
+          subtotal: 0,
+          gst: 0,
+          total: 0,
+        },
+      }
+    }
+
+    try {
+      const calculated = calculateTotalPrice({
+        ...formData,
+        workspaceType: formData.workspaceType as any,
+      } as any)
+      
+      // Apply seats multiplier for certain workspace types
+      let adjustedBasePrice = calculated.basePrice
+      if (['hot-desk', 'dedicated-desk', 'private-cabin'].includes(formData.workspaceType)) {
+        adjustedBasePrice = calculated.basePrice * formData.seats
+      }
+      
+      const adjustedSubtotal = adjustedBasePrice + calculated.addOnsPrice
+      const adjustedGst = adjustedSubtotal * 0.18
+      const adjustedTotal = adjustedSubtotal + adjustedGst
+      
+      return {
+        basePrice: adjustedBasePrice,
+        addOnsPrice: calculated.addOnsPrice,
+        subtotal: adjustedSubtotal,
+        gst: adjustedGst,
+        total: adjustedTotal,
+        breakdown: {
+          ...calculated.breakdown,
+          basePrice: adjustedBasePrice,
+          subtotal: adjustedSubtotal,
+          gst: adjustedGst,
+          total: adjustedTotal,
+        },
+      }
+    } catch (error) {
+      console.error('Price calculation error:', error)
+      return {
+        basePrice: 0,
+        addOnsPrice: 0,
+        subtotal: 0,
+        gst: 0,
+        total: 0,
+        breakdown: {
+          workspace: '',
+          duration: '',
+          basePrice: 0,
+          addOns: [],
+          subtotal: 0,
+          gst: 0,
+          total: 0,
+        },
+      }
+    }
   }, [
     formData.workspaceType,
     formData.seats,
@@ -146,85 +213,19 @@ export default function Booking() {
     formData.addOns,
   ])
 
-  const calculatePrice = () => {
-    if (!formData.workspaceType || !formData.startDate) {
-      setTotalPrice(0)
-      setPriceBreakdown({
-        basePrice: 0,
-        addOnsTotal: 0,
-        subtotal: 0,
-        gst: 0,
-        total: 0,
-      })
-      return
-    }
-
-    const workspace = workspaceOptions.find((w) => w.id === formData.workspaceType)
-    if (!workspace) return
-
-    let basePrice = 0
-    let duration = 1
-
-    // Calculate duration
-    if (formData.bookingType === 'hourly' && formData.startTime && formData.endTime) {
-      const start = new Date(`2000-01-01T${formData.startTime}`)
-      const end = new Date(`2000-01-01T${formData.endTime}`)
-      duration = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60)))
-      basePrice = (workspace.prices.hourly || 0) * duration
-    } else if (formData.bookingType === 'daily' && formData.endDate) {
-      const start = new Date(formData.startDate)
-      const end = new Date(formData.endDate)
-      duration = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1)
-      basePrice = (workspace.prices.daily || 0) * duration
-    } else if (formData.bookingType === 'weekly' && formData.endDate) {
-      const start = new Date(formData.startDate)
-      const end = new Date(formData.endDate)
-      const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1
-      duration = Math.ceil(days / 7)
-      basePrice = (workspace.prices.weekly || 0) * duration
-    } else if (formData.bookingType === 'monthly') {
-      duration = 1
-      basePrice = workspace.prices.monthly || 0
-    } else if (formData.bookingType === 'daily' && !formData.endDate) {
-      duration = 1
-      basePrice = workspace.prices.daily || 0
-    }
-
-    // Apply seats multiplier for certain workspace types
-    if (['hot-desk', 'dedicated-desk', 'private-cabin'].includes(formData.workspaceType)) {
-      basePrice = basePrice * formData.seats
-    }
-
-    // Calculate add-ons
-    let addOnsTotal = 0
-    formData.addOns.forEach((addOnId) => {
-      const addOn = addOnsOptions.find((a) => a.id === addOnId)
-      if (!addOn) return
-
-      if (addOn.unit === 'per day') {
-        addOnsTotal += addOn.price * duration
-      } else if (addOn.unit === 'per month') {
-        addOnsTotal += addOn.price * Math.ceil(duration / 30)
-      } else if (addOn.unit === 'per page') {
-        addOnsTotal += addOn.price // Assume 1 page for now
-      }
-    })
-
-    const subtotal = basePrice + addOnsTotal
-    const gst = subtotal * 0.18
-    const total = subtotal + gst
-
+  // Update state when price calculation changes
+  useEffect(() => {
+    setTotalPrice(priceCalculation.total)
     setPriceBreakdown({
-      basePrice,
-      addOnsTotal,
-      subtotal,
-      gst,
-      total,
+      basePrice: priceCalculation.basePrice,
+      addOnsTotal: priceCalculation.addOnsPrice,
+      subtotal: priceCalculation.subtotal,
+      gst: priceCalculation.gst,
+      total: priceCalculation.total,
     })
-    setTotalPrice(total)
-  }
+  }, [priceCalculation])
 
-  const handleInputChange = (
+  const handleInputChange = useCallback((
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target
@@ -256,9 +257,9 @@ export default function Booking() {
         return newErrors
       })
     }
-  }
+  }, [errors])
 
-  const validateForm = (): boolean => {
+  const validateForm = useCallback((): boolean => {
     const newErrors: Record<string, string> = {}
 
     if (!formData.fullName || formData.fullName.length < 2) {
@@ -317,9 +318,9 @@ export default function Booking() {
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
-  }
+  }, [formData])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validateForm()) {
@@ -350,7 +351,7 @@ export default function Booking() {
       setErrors({ submit: 'Booking failed. Please try again.' })
       setIsSubmitting(false)
     }
-  }
+  }, [formData, totalPrice, validateForm])
 
   const selectedWorkspace = workspaceOptions.find((w) => w.id === formData.workspaceType)
   const showSeatsInput = ['hot-desk', 'dedicated-desk', 'private-cabin'].includes(formData.workspaceType)
