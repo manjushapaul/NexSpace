@@ -7,21 +7,108 @@ export default function HeroBanner() {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
   const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  // Email validation
+  const validateEmail = (email: string) => {
+    if (!email || !email.trim()) return false
+    const trimmedEmail = email.trim().toLowerCase()
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    if (!emailRegex.test(trimmedEmail)) return false
+    if (trimmedEmail.startsWith('.') || trimmedEmail.startsWith('@') || 
+        trimmedEmail.endsWith('.') || trimmedEmail.endsWith('@') ||
+        trimmedEmail.includes('..') || trimmedEmail.includes('@.') ||
+        trimmedEmail.includes('.@')) return false
+    if (trimmedEmail.length > 254) return false
+    const parts = trimmedEmail.split('@')
+    if (parts.length !== 2 || !parts[1].includes('.')) return false
+    const domainParts = parts[1].split('.')
+    return domainParts.length >= 2 && domainParts[domainParts.length - 1].length >= 2
+  }
+
+  // Phone validation
+  const validatePhone = (phone: string) => {
+    if (!phone || !phone.trim()) return false
+    const cleanedPhone = phone.replace(/[\s\-().+]/g, '')
+    if (!/^\d+$/.test(cleanedPhone)) return false
+    if (cleanedPhone.length < 7 || cleanedPhone.length > 15) return false
     
-    // Log form data to console for future backend integration
-    console.log('Form submitted:', {
-      name,
-      mobile,
-      email,
-    })
+    // Indian phone number validation
+    if (cleanedPhone.startsWith('91')) {
+      if (cleanedPhone.length === 12) {
+        const mobilePart = cleanedPhone.substring(2)
+        if (/^[6-9]\d{9}$/.test(mobilePart)) return true
+      }
+    } else if (cleanedPhone.length === 10) {
+      if (/^[6-9]\d{9}$/.test(cleanedPhone)) return true
+    }
+    
+    // International numbers
+    return cleanedPhone.length >= 7 && cleanedPhone.length <= 15 && !cleanedPhone.startsWith('0')
+  }
 
-    // Reset form after submission
-    setName('')
-    setMobile('')
-    setEmail('')
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError('')
+    setSubmitSuccess(false)
+
+    // Validation
+    if (!name.trim() || name.trim().length < 2) {
+      setError('Please enter a valid name (at least 2 characters)')
+      return
+    }
+
+    if (!email.trim() || !validateEmail(email)) {
+      setError('Please enter a valid email address')
+      return
+    }
+
+    if (!mobile.trim() || !validatePhone(mobile)) {
+      setError('Please enter a valid mobile number (10 digits for Indian numbers)')
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/hero-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          mobile: mobile.trim(),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      // Success
+      setIsSubmitting(false)
+      setSubmitSuccess(true)
+
+      // Reset form
+      setName('')
+      setMobile('')
+      setEmail('')
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setSubmitSuccess(false)
+      }, 5000)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setIsSubmitting(false)
+      setError(error instanceof Error ? error.message : 'Failed to send message. Please try again later.')
+    }
   }
 
   return (
@@ -64,6 +151,18 @@ export default function HeroBanner() {
           Uncover Cozy Spaces
           </h2>
 
+          {submitSuccess && (
+            <div className="mb-4 p-3 bg-green-500/20 border border-green-500/50 rounded-lg text-white text-center text-sm">
+              <p className="font-medium">Thank you! We will contact you soon.</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-white text-center text-sm">
+              <p className="font-medium">{error}</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             {/* Name Field */}
             <div className="relative">
@@ -93,6 +192,9 @@ export default function HeroBanner() {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your name"
                   required
+                  minLength={2}
+                  maxLength={100}
+                  autoComplete="name"
                   className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
                 />
               </div>
@@ -126,6 +228,8 @@ export default function HeroBanner() {
                   onChange={(e) => setMobile(e.target.value)}
                   placeholder="Mobile Number"
                   required
+                  autoComplete="tel"
+                  maxLength={20}
                   className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
                 />
               </div>
@@ -159,27 +263,33 @@ export default function HeroBanner() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
+                  autoComplete="email"
+                  maxLength={254}
                   className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
                 />
               </div>
             </div>
 
             {/* Submit Button */}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault()
-                const form = e.currentTarget.closest('form')
-                if (form) {
-                  form.requestSubmit()
-                }
-              }}
+            <button
+              type="submit"
+              disabled={isSubmitting}
               className="block w-full bg-white text-black rounded-full py-3 sm:py-3 text-center
                font-semibold text-sm sm:text-base hover:bg-opacity-90 transition-colors
-                shadow-md cursor-pointer"
+                shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Start Your Collective Journey
-            </a>
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Sending...
+                </span>
+              ) : (
+                'Start Your Collective Journey'
+              )}
+            </button>
           </form>
         </div>
       </div>

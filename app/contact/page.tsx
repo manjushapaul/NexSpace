@@ -149,53 +149,185 @@ export default function Contact() {
   }
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
+    if (!email || !email.trim()) return false
+    
+    const trimmedEmail = email.trim().toLowerCase()
+    
+    // Basic email format check
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    
+    if (!emailRegex.test(trimmedEmail)) {
+      return false
+    }
+    
+    // Check for common invalid patterns
+    if (trimmedEmail.startsWith('.') || 
+        trimmedEmail.startsWith('@') || 
+        trimmedEmail.endsWith('.') || 
+        trimmedEmail.endsWith('@') ||
+        trimmedEmail.includes('..') ||
+        trimmedEmail.includes('@.') ||
+        trimmedEmail.includes('.@')) {
+      return false
+    }
+    
+    // Check length limits (RFC 5321)
+    if (trimmedEmail.length > 254) {
+      return false
+    }
+    
+    // Check domain has at least one dot
+    const parts = trimmedEmail.split('@')
+    if (parts.length !== 2 || !parts[1].includes('.')) {
+      return false
+    }
+    
+    // Check domain extension is valid (at least 2 characters)
+    const domainParts = parts[1].split('.')
+    if (domainParts.length < 2 || domainParts[domainParts.length - 1].length < 2) {
+      return false
+    }
+    
+    return true
   }
 
   const validatePhone = (phone: string) => {
-    if (!phone) return true // Phone is optional
-    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/
-    return phoneRegex.test(phone)
+    if (!phone || !phone.trim()) return true // Phone is optional
+    
+    // Remove all whitespace, dashes, dots, parentheses, and plus signs for validation
+    const cleanedPhone = phone.replace(/[\s\-().+]/g, '')
+    
+    // Check if it contains only digits
+    if (!/^\d+$/.test(cleanedPhone)) {
+      return false
+    }
+    
+    // Check minimum length (at least 7 digits for international numbers)
+    if (cleanedPhone.length < 7) {
+      return false
+    }
+    
+    // Check maximum length (15 digits is the ITU-T E.164 standard)
+    if (cleanedPhone.length > 15) {
+      return false
+    }
+    
+    // Indian phone number validation (10 digits, optionally with country code 91)
+    // If it starts with 91 and has 12 digits total, or has 10 digits, it's valid
+    if (cleanedPhone.startsWith('91')) {
+      // Indian number with country code: should be 12 digits (91 + 10 digits)
+      if (cleanedPhone.length === 12) {
+        // Check if the number after 91 is a valid Indian mobile number (starts with 6-9)
+        const mobilePart = cleanedPhone.substring(2)
+        if (/^[6-9]\d{9}$/.test(mobilePart)) {
+          return true
+        }
+      }
+    } else if (cleanedPhone.length === 10) {
+      // Indian mobile number without country code (should start with 6-9)
+      if (/^[6-9]\d{9}$/.test(cleanedPhone)) {
+        return true
+      }
+    }
+    
+    // For international numbers (other countries), validate general format
+    // Must be between 7-15 digits and not start with 0
+    if (cleanedPhone.length >= 7 && cleanedPhone.length <= 15 && !cleanedPhone.startsWith('0')) {
+      return true
+    }
+    
+    return false
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
     
-    // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+    // Real-time validation for email and phone
+    if (name === 'email' && value.trim()) {
+      if (!validateEmail(value)) {
+        setErrors((prev) => ({
+          ...prev,
+          email: 'Please enter a valid email address (e.g., example@domain.com)'
+        }))
+      } else {
+        setErrors((prev) => {
+          const newErrors = { ...prev }
+          delete newErrors.email
+          return newErrors
+        })
+      }
+    } else if (name === 'phone' && value.trim()) {
+      if (!validatePhone(value)) {
+        setErrors((prev) => ({
+          ...prev,
+          phone: 'Please enter a valid phone number (10 digits for Indian numbers, or international format)'
+        }))
+      } else {
+        setErrors((prev) => {
+          const newErrors = { ...prev }
+          delete newErrors.phone
+          return newErrors
+        })
+      }
+    } else {
+      // Clear error for other fields when user starts typing
+      if (errors[name]) {
+        setErrors((prev) => {
+          const newErrors = { ...prev }
+          delete newErrors[name]
+          return newErrors
+        })
+      }
     }
   }
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
+    // Name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required'
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters long'
+    } else if (formData.name.trim().length > 100) {
+      newErrors.name = 'Name must be less than 100 characters'
     }
 
+    // Email validation
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required'
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'
+    } else {
+      const emailError = validateEmail(formData.email)
+      if (!emailError) {
+        newErrors.email = 'Please enter a valid email address (e.g., example@domain.com)'
+      }
     }
 
-    if (formData.phone && !validatePhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number'
+    // Phone validation (optional but must be valid if provided)
+    if (formData.phone && formData.phone.trim()) {
+      const phoneError = validatePhone(formData.phone)
+      if (!phoneError) {
+        newErrors.phone = 'Please enter a valid phone number (10 digits for Indian numbers, or international format)'
+      }
     }
 
+    // Subject validation
     if (!formData.subject.trim()) {
       newErrors.subject = 'Subject is required'
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = 'Subject must be at least 3 characters long'
+    } else if (formData.subject.trim().length > 200) {
+      newErrors.subject = 'Subject must be less than 200 characters'
     }
 
+    // Message validation
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required'
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters long'
+    } else if (formData.message.trim().length > 2000) {
+      newErrors.message = 'Message must be less than 2000 characters'
     }
 
     setErrors(newErrors)
@@ -212,16 +344,25 @@ export default function Contact() {
 
     setIsSubmitting(true)
 
-    // Simulate API call
-    // TODO: Replace with actual API endpoint
-    // Example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) })
-    
-    setTimeout(() => {
-      console.log('Form submitted:', formData)
-      
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      // Success
       setIsSubmitting(false)
       setSubmitSuccess(true)
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -237,7 +378,13 @@ export default function Contact() {
       setTimeout(() => {
         setSubmitSuccess(false)
       }, 5000)
-    }, 1000)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setIsSubmitting(false)
+      setErrors({
+        submit: error instanceof Error ? error.message : 'Failed to send message. Please try again later.',
+      })
+    }
   }
 
   return (
@@ -379,6 +526,17 @@ export default function Contact() {
               </div>
             )}
 
+            {errors.submit && (
+              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-white">
+                <p className="font-medium mb-2">{errors.submit}</p>
+                {errors.submit.includes('GMAIL_EMAIL') && (
+                  <p className="text-sm text-red-200 mt-2">
+                    To fix this, create a <code className="bg-red-900/30 px-2 py-1 rounded">.env.local</code> file in your project root with your Gmail credentials.
+                  </p>
+                )}
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {/* Name Field */}
               <div className="relative">
@@ -450,8 +608,11 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Your Email Address"
+                    placeholder="Your Email Address (e.g., name@example.com)"
                     required
+                    autoComplete="email"
+                    pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
+                    maxLength={254}
                     className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
                     aria-invalid={errors.email ? 'true' : 'false'}
                     aria-describedby={errors.email ? 'email-error' : undefined}
@@ -492,7 +653,9 @@ export default function Contact() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="Your Phone Number (Optional)"
+                    placeholder="Your Phone Number (Optional) - e.g., +91 9876543210"
+                    autoComplete="tel"
+                    maxLength={20}
                     className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
                     aria-invalid={errors.phone ? 'true' : 'false'}
                     aria-describedby={errors.phone ? 'phone-error' : undefined}

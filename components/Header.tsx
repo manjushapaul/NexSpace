@@ -96,7 +96,7 @@ export default function Header() {
             })}
             
             {/* Get Started Button */}
-            <Link
+            {/* <Link
               href="/get-started"
               className={`${
                 isScrolledUp 
@@ -105,7 +105,7 @@ export default function Header() {
               } px-4 lg:px-6 py-2 rounded-lg font-medium text-sm lg:text-base transition-all duration-500 ease-in-out`}
             >
               Get Started
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -212,13 +212,13 @@ export default function Header() {
             
             {/* Get Started Button */}
             <div className="mt-4 px-4 sm:px-0">
-              <Link
+              {/* <Link
                 href="/get-started"
                 onClick={closeMenu}
                 className="block w-full bg-black text-white px-4 py-3 rounded-lg font-medium text-base sm:text-lg text-center hover:bg-gray-800 active:bg-gray-800 transition-colors touch-manipulation"
               >
                 Get Started
-              </Link>
+              </Link> */}
             </div>
           </nav>
         </div>

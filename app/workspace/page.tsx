@@ -62,7 +62,7 @@ const workspaces: WorkspaceCard[] = [
     title: 'Private Cabins',
     description: 'Quiet, enclosed workspace for small teams. Ideal for focused work and privacy.',
     price: '₹12,000/Month',
-    image: '/images/space-3.jpg',
+    image: '/images/private-cabin.jpg',
     tags: [
       { label: '75 Mbps', icon: 'wifi' },
       { label: '2-3 Seats', icon: 'users' },
@@ -80,7 +80,7 @@ const workspaces: WorkspaceCard[] = [
     title: 'Meeting Rooms',
     description: 'Professional meeting spaces with modern amenities. Book by the hour.',
     price: '₹500/Hour',
-    image: '/images/space-1.jpg',
+    image: '/images/meeting-room.jpg',
     tags: [
       { label: 'Smart TV', icon: 'tv' },
       { label: '6-8 Seats', icon: 'users' },
@@ -98,7 +98,7 @@ const workspaces: WorkspaceCard[] = [
     title: 'Phone Booths',
     description: 'Private, soundproof booths for calls and video meetings.',
     price: 'Free for Members',
-    image: '/images/space-2.jpg',
+    image: '/images/phone-space.jpg',
     tags: [
       { label: 'Soundproof', icon: 'volume' },
       { label: '1 Person', icon: 'user' },
@@ -749,7 +749,8 @@ export default function Workspace() {
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 z-20 text-gray-600 hover:text-black transition-colors p-2"
+              className="absolute top-4 right-4 z-20 text-gray-600 max-lg:text-white max-lg:bg-black
+               max-lg:rounded-full hover:text-black transition-colors p-2"
               aria-label="Close modal"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
