@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation'
 export default function Header() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolledUp, setIsScrolledUp] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -19,6 +21,25 @@ export default function Header() {
       document.body.style.overflow = 'unset'
     }
   }, [isMenuOpen])
+
+  // Handle scroll detection for fixed header
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      
+      // Show fixed header when scrolling up and past a threshold (e.g., 100px)
+      if (currentScrollY > 100 && currentScrollY < lastScrollY) {
+        setIsScrolledUp(true)
+      } else if (currentScrollY <= 100) {
+        setIsScrolledUp(false)
+      }
+      
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   const navLinks = [
     { href: '/', label: 'Home', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -37,12 +58,20 @@ export default function Header() {
 
   return (
     <>
-      <header className="absolute top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+      <header 
+        className={`${
+          isScrolledUp 
+            ? 'fixed bg-white shadow-md py-6 sm:py-8' 
+            : 'absolute pt-6 sm:pt-8'
+        } top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 transition-all duration-500 ease-in-out`}
+      >
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <Link 
             href="/" 
-            className="text-white text-xl sm:text-2xl font-semibold tracking-tight hover:opacity-90 transition-opacity"
+            className={`${
+              isScrolledUp ? 'text-black' : 'text-white'
+            } text-xl sm:text-2xl font-semibold tracking-tight hover:opacity-90 transition-colors duration-500 ease-in-out`}
           >
             NexSpace®
           </Link>
@@ -55,7 +84,9 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-white text-sm lg:text-base font-medium transition-colors hover:opacity-90 ${
+                  className={`${
+                    isScrolledUp ? 'text-black' : 'text-white'
+                  } text-sm lg:text-base font-medium transition-colors duration-500 ease-in-out hover:opacity-90 ${
                     isActive ? 'underline underline-offset-4' : ''
                   }`}
                 >
@@ -67,7 +98,11 @@ export default function Header() {
             {/* Get Started Button */}
             <Link
               href="/get-started"
-              className="bg-white text-black px-4 lg:px-6 py-2 rounded-lg font-medium text-sm lg:text-base hover:bg-opacity-90 transition-colors"
+              className={`${
+                isScrolledUp 
+                  ? 'bg-black text-white hover:bg-gray-800' 
+                  : 'bg-white text-black hover:bg-opacity-90'
+              } px-4 lg:px-6 py-2 rounded-lg font-medium text-sm lg:text-base transition-all duration-500 ease-in-out`}
             >
               Get Started
             </Link>
@@ -77,7 +112,9 @@ export default function Header() {
           <div className="md:hidden flex items-center gap-3">
             <button
               onClick={toggleMenu}
-              className="text-white p-2 hover:opacity-80 transition-opacity"
+              className={`${
+                isScrolledUp ? 'text-black' : 'text-white'
+              } p-2 hover:opacity-80 transition-colors duration-500 ease-in-out`}
               aria-label="Toggle menu"
             >
               <svg
