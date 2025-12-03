@@ -116,9 +116,9 @@ export default function ComingSoonBanner() {
           </div>
 
           {/* H1 Title - SEO Optimized */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
+          {/* <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
             Modern Coworking Space in Kottayam for Startups & Remote Teams
-          </h1>
+          </h1> */}
 
           {/* Subtitle */}
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white/90 mb-4 sm:mb-6">
