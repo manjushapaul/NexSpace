@@ -195,7 +195,7 @@ export default function HeroBanner() {
                   minLength={2}
                   maxLength={100}
                   autoComplete="name"
-                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
+                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-base font-light w-full"
                 />
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function HeroBanner() {
                   required
                   autoComplete="tel"
                   maxLength={20}
-                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
+                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-base font-light w-full"
                 />
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function HeroBanner() {
                   required
                   autoComplete="email"
                   maxLength={254}
-                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-sm sm:text-base font-light w-full"
+                  className="flex-1 bg-transparent border-none outline-none text-white placeholder-white text-base font-light w-full"
                 />
               </div>
             </div>

@@ -103,7 +103,7 @@ export default function ComingSoonBanner() {
 
   return (
     <div className="relative w-full bg-gradient-to-r from-black via-gray-900 to-black border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 sm:pt-28 sm:pb-12 lg:pt-32 lg:pb-16">
         <div className="flex flex-col items-center text-center">
           {/* Badge */}
           <div className="mb-6 sm:mb-8">
@@ -160,7 +160,7 @@ export default function ComingSoonBanner() {
                 placeholder="Enter your email"
                 required
                 maxLength={254}
-                className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 sm:px-6 py-3 text-white placeholder-white/60 text-sm sm:text-base font-light focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
+                className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 sm:px-6 py-3 text-white placeholder-white/60 text-base font-light focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
               />
 
               {/* Phone Input (Required) */}
@@ -171,7 +171,7 @@ export default function ComingSoonBanner() {
                 placeholder="Phone number"
                 required
                 maxLength={20}
-                className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 sm:px-6 py-3 text-white placeholder-white/60 text-sm sm:text-base font-light focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
+                className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 sm:px-6 py-3 text-white placeholder-white/60 text-base font-light focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
               />
 
               {/* Submit Button */}

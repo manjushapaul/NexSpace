@@ -566,7 +566,7 @@ export default function Contact() {
                     onChange={handleInputChange}
                     placeholder="Your Name"
                     required
-                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
+                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-base font-light w-full"
                     aria-invalid={errors.name ? 'true' : 'false'}
                     aria-describedby={errors.name ? 'name-error' : undefined}
                   />
@@ -611,7 +611,7 @@ export default function Contact() {
                     autoComplete="email"
                     pattern="[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
                     maxLength={254}
-                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
+                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-base font-light w-full"
                     aria-invalid={errors.email ? 'true' : 'false'}
                     aria-describedby={errors.email ? 'email-error' : undefined}
                   />
@@ -655,7 +655,7 @@ export default function Contact() {
                     required
                     autoComplete="tel"
                     maxLength={20}
-                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
+                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-base font-light w-full"
                     aria-invalid={errors.phone ? 'true' : 'false'}
                     aria-describedby={errors.phone ? 'phone-error' : undefined}
                   />
@@ -697,7 +697,7 @@ export default function Contact() {
                     onChange={handleInputChange}
                     placeholder="Subject"
                     required
-                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
+                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-base font-light w-full"
                     aria-invalid={errors.subject ? 'true' : 'false'}
                     aria-describedby={errors.subject ? 'subject-error' : undefined}
                   />
@@ -776,7 +776,7 @@ export default function Contact() {
                     placeholder="Your Message"
                     rows={5}
                     required
-                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full resize-none"
+                    className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-base font-light w-full resize-none"
                     aria-invalid={errors.message ? 'true' : 'false'}
                     aria-describedby={errors.message ? 'message-error' : undefined}
                   />
