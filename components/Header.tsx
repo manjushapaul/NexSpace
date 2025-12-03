@@ -73,7 +73,7 @@ export default function Header() {
               isScrolledUp ? 'text-black' : 'text-white'
             } text-xl sm:text-2xl font-semibold tracking-tight hover:opacity-90 transition-colors duration-500 ease-in-out`}
           >
-            NexSpace®
+            NexSpot®
           </Link>
 
           {/* Desktop Navigation Links */}

@@ -82,7 +82,7 @@ const validateEmailFormat = (email: string): boolean => {
 
 // Enhanced phone validation (matches client-side)
 const validatePhoneFormat = (phone: string): boolean => {
-  if (!phone || !phone.trim()) return true // Phone is optional
+  if (!phone || !phone.trim()) return false // Phone is required
   
   // Remove all whitespace, dashes, dots, parentheses, and plus signs for validation
   const cleanedPhone = phone.replace(/[\s\-().+]/g, '')
@@ -145,11 +145,12 @@ const validateFormData = (data: any): data is ContactFormData => {
     return false
   }
   
-  // Phone validation (optional but must be valid if provided)
-  if (data.phone && typeof data.phone === 'string' && data.phone.trim()) {
-    if (!validatePhoneFormat(data.phone)) {
-      return false
-    }
+  // Phone validation (required)
+  if (!data.phone || typeof data.phone !== 'string' || !data.phone.trim()) {
+    return false
+  }
+  if (!validatePhoneFormat(data.phone)) {
+    return false
   }
   
   // Subject validation
@@ -186,7 +187,9 @@ export async function POST(request: NextRequest) {
       if (!body.email || typeof body.email !== 'string' || !validateEmailFormat(body.email)) {
         errors.push('Please provide a valid email address')
       }
-      if (body.phone && typeof body.phone === 'string' && body.phone.trim() && !validatePhoneFormat(body.phone)) {
+      if (!body.phone || typeof body.phone !== 'string' || !body.phone.trim()) {
+        errors.push('Phone number is required')
+      } else if (!validatePhoneFormat(body.phone)) {
         errors.push('Please provide a valid phone number')
       }
       if (!body.subject || typeof body.subject !== 'string' || body.subject.trim().length < 3) {
@@ -206,7 +209,7 @@ export async function POST(request: NextRequest) {
 
     // Get email configuration
     const { email: senderEmail } = getEmailConfig()
-    const recipientEmail = 'manjushapaul39@gmail.com'
+    const recipientEmail = 'nexspotcoworking@gmail.com'
 
     // Create email content
     const emailSubject = `Contact Form: ${body.subject}`
@@ -230,7 +233,7 @@ export async function POST(request: NextRequest) {
         </div>
         
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #999;">
-          <p>This email was sent from the NexSpace contact form.</p>
+          <p>This email was sent from the NexSpot contact form.</p>
           <p>You can reply directly to this email to respond to ${body.name}.</p>
         </div>
       </div>
@@ -249,7 +252,7 @@ Message:
 ${body.message}
 
 ---
-This email was sent from the NexSpace contact form.
+This email was sent from the NexSpot contact form.
 You can reply directly to this email to respond to ${body.name}.
     `.trim()
 
@@ -257,7 +260,7 @@ You can reply directly to this email to respond to ${body.name}.
     const transporter = createTransporter()
 
     const mailOptions = {
-      from: `"NexSpace Contact Form" <${senderEmail}>`,
+      from: `"NexSpot Contact Form" <${senderEmail}>`,
       to: recipientEmail,
       replyTo: body.email, // Allow direct reply to the sender
       subject: emailSubject,
@@ -279,7 +282,7 @@ You can reply directly to this email to respond to ${body.name}.
       if (error.message.includes('credentials') || error.message.includes('not configured')) {
         return NextResponse.json(
           { 
-            error: 'Email service is not configured. Please set up GMAIL_EMAIL and GMAIL_APP_PASSWORD in your .env.local file.',
+            error: 'Email service is not configured. Please set up GMAIL_EMAIL and GMAIL_APP_PASSWORD environment variables. For local development, add them to .env.local. For Vercel deployment, add them in Project Settings > Environment Variables.',
             code: 'EMAIL_NOT_CONFIGURED'
           },
           { status: 500 }

@@ -35,14 +35,14 @@ const contactInfoCards: ContactInfoCard[] = [
     ),
     heading: 'Visit Us',
     content: [
-      'NexSpace Coworking',
+      'NexSpot Coworking',
       'MG Road, Near Town Hall',
       'Kottayam, Kerala 686001',
       'India',
     ],
     link: {
       text: 'Get Directions',
-      href: 'https://maps.google.com/?q=NexSpace+Coworking+Kottayam',
+      href: 'https://maps.google.com/?q=NexSpot+Coworking+Kottayam',
     },
   },
   {
@@ -67,10 +67,10 @@ const contactInfoCards: ContactInfoCard[] = [
       </svg>
     ),
     heading: 'Email Us',
-    content: ['info@nexspace.com', 'support@nexspace.com'],
+    content: ['nexspotcoworking@gmail.com'],
     link: {
       text: 'Send Email',
-      href: 'mailto:info@nexspace.com',
+      href: 'mailto:nexspotcoworking@gmail.com',
     },
   },
   {
@@ -100,7 +100,7 @@ const faqData: FAQItem[] = [
     id: '2',
     number: '02',
     question: 'How do I schedule a tour?',
-    answer: 'You can schedule a tour by filling out our contact form, calling us at +91 98765 43210, or emailing us at info@nexspace.com. We typically schedule tours during business hours and can accommodate same-day requests when possible.',
+    answer: 'You can schedule a tour by filling out our contact form, calling us at +91 98765 43210, or emailing us at nexspotcoworking@gmail.com. We typically schedule tours during business hours and can accommodate same-day requests when possible.',
   },
   {
     id: '3',
@@ -192,7 +192,7 @@ export default function Contact() {
   }
 
   const validatePhone = (phone: string) => {
-    if (!phone || !phone.trim()) return true // Phone is optional
+    if (!phone || !phone.trim()) return false // Phone is required
     
     // Remove all whitespace, dashes, dots, parentheses, and plus signs for validation
     const cleanedPhone = phone.replace(/[\s\-().+]/g, '')
@@ -304,8 +304,10 @@ export default function Contact() {
       }
     }
 
-    // Phone validation (optional but must be valid if provided)
-    if (formData.phone && formData.phone.trim()) {
+    // Phone validation (required)
+    if (!formData.phone || !formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required'
+    } else {
       const phoneError = validatePhone(formData.phone)
       if (!phoneError) {
         newErrors.phone = 'Please enter a valid phone number (10 digits for Indian numbers, or international format)'
@@ -392,12 +394,9 @@ export default function Contact() {
       <Header />
 
       {/* Hero Section */}
-      <div
-        ref={heroRef.ref}
-        className={`relative min-h-screen flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-out ${
-          heroRef.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-      >
+        <div
+          className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+        >
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -531,7 +530,7 @@ export default function Contact() {
                 <p className="font-medium mb-2">{errors.submit}</p>
                 {errors.submit.includes('GMAIL_EMAIL') && (
                   <p className="text-sm text-red-200 mt-2">
-                    To fix this, create a <code className="bg-red-900/30 px-2 py-1 rounded">.env.local</code> file in your project root with your Gmail credentials.
+                    To fix this: For local development, create a <code className="bg-red-900/30 px-2 py-1 rounded">.env.local</code> file. For Vercel, add environment variables in Project Settings &gt; Environment Variables.
                   </p>
                 )}
               </div>
@@ -653,7 +652,8 @@ export default function Contact() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="Your Phone Number (Optional) - e.g., +91 9876543210"
+                    placeholder="Your Phone Number - e.g., +91 9876543210"
+                    required
                     autoComplete="tel"
                     maxLength={20}
                     className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/70 text-sm sm:text-base font-light w-full"
@@ -821,7 +821,7 @@ export default function Contact() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="NexSpace Location Map"
+                  title="NexSpot Location Map"
                   className="w-full h-full"
                 />
               </div>
@@ -936,7 +936,7 @@ export default function Contact() {
           {/* Glassmorphism CTA Card */}
           <div className="w-full max-w-[420px] mx-auto bg-white/20 backdrop-blur-lg rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/30">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-light text-center mb-4 sm:mb-6">
-              Ready to Visit NexSpace?
+              Ready to Visit NexSpot?
             </h2>
             <p className="text-white text-base sm:text-lg font-light text-center mb-6 sm:mb-8">
               Schedule a tour and see our space in person

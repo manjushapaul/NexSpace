@@ -616,7 +616,7 @@ export default function Workspace() {
           {/* Glassmorphism CTA Card */}
           <div className="w-full max-w-[420px] mx-auto bg-white/20 backdrop-blur-lg rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/30">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-light text-center mb-4 sm:mb-6">
-              Ready to Join NexSpace?
+              Ready to Join NexSpot?
             </h2>
             <p className="text-white text-base sm:text-lg font-light text-center mb-6 sm:mb-8">
               Book your workspace today
@@ -798,16 +798,13 @@ export default function Workspace() {
                 </ul>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="/booking"
-                    className="flex-1 bg-black text-white rounded-full py-3 text-center font-semibold text-base hover:bg-opacity-90 transition-colors"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      closeModal()
-                    }}
+                  <button
+                    disabled
+                    className="flex-1 bg-gray-400 text-white rounded-full py-3 text-center font-semibold text-base cursor-not-allowed opacity-50"
+                    title="Coming Soon"
                   >
                     Book Now
-                  </Link>
+                  </button>
                   <Link
                     href="/contact#send-us-a-message"
                     className="flex-1 border-2 border-black text-black rounded-full py-3 text-center font-semibold text-base hover:bg-black hover:text-white transition-colors"

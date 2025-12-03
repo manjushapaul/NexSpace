@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
 
     // Get email configuration
     const { email: senderEmail } = getEmailConfig()
-    const recipientEmail = 'manjushapaul39@gmail.com'
+    const recipientEmail = 'nexspotcoworking@gmail.com'
 
     // Create email content
     const emailSubject = `New Lead from Home Page: ${body.name}`
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
         </div>
         
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #999;">
-          <p>This email was sent from the NexSpace home page hero form.</p>
+          <p>This email was sent from the NexSpot home page hero form.</p>
           <p>You can reply directly to this email to respond to ${body.name}.</p>
         </div>
       </div>
@@ -164,7 +164,7 @@ Email: ${body.email}
 Mobile: ${body.mobile}
 
 ---
-This email was sent from the NexSpace home page hero form.
+This email was sent from the NexSpot home page hero form.
 You can reply directly to this email to respond to ${body.name}.
     `.trim()
 
@@ -172,7 +172,7 @@ You can reply directly to this email to respond to ${body.name}.
     const transporter = createTransporter()
 
     const mailOptions = {
-      from: `"NexSpace Home Page" <${senderEmail}>`,
+      from: `"NexSpot Home Page" <${senderEmail}>`,
       to: recipientEmail,
       replyTo: body.email,
       subject: emailSubject,
@@ -193,7 +193,7 @@ You can reply directly to this email to respond to ${body.name}.
       if (error.message.includes('credentials') || error.message.includes('not configured')) {
         return NextResponse.json(
           { 
-            error: 'Email service is not configured. Please set up GMAIL_EMAIL and GMAIL_APP_PASSWORD in your .env.local file.',
+            error: 'Email service is not configured. Please set up GMAIL_EMAIL and GMAIL_APP_PASSWORD environment variables. For local development, add them to .env.local. For Vercel deployment, add them in Project Settings > Environment Variables.',
             code: 'EMAIL_NOT_CONFIGURED'
           },
           { status: 500 }

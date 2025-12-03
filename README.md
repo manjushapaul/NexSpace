@@ -1,4 +1,4 @@
-# NexSpace®
+# NexSpot®
 
 A modern, responsive Next.js application for finding workspaces, built with Tailwind CSS.
 
@@ -52,7 +52,7 @@ The contact form sends emails using Gmail SMTP via Nodemailer. To configure:
 2. **Generate an App Password**:
    - Go to https://myaccount.google.com/apppasswords
    - Select "Mail" and "Other (Custom name)"
-   - Enter "NexSpace Contact Form" as the name
+   - Enter "NexSpot Contact Form" as the name
    - Copy the generated 16-character password
 3. **Set Environment Variables**:
    Create a `.env.local` file in the root directory:

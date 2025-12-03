@@ -132,7 +132,7 @@ export default function HeroBanner() {
         {/* Main Title */}
         <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[200px] font-normal
          text-white text-center tracking-tight">
-        NEXSPACE
+        NE<span className="text-[#F5C553] font-semibold italic">X</span>SPOT
         </h1>
 
         {/* Slogans */}

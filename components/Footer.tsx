@@ -36,14 +36,14 @@ export default function Footer() {
 
   const communityLinks = [
     { href: '/#faq', label: 'FAQ' },
-    { href: 'https://twitter.com/nexspace', label: 'Twitter', external: true },
-    { href: 'https://facebook.com/nexspace', label: 'Facebook', external: true },
+    { href: 'https://twitter.com/nexspot', label: 'Twitter', external: true },
+    { href: 'https://facebook.com/nexspot', label: 'Facebook', external: true },
   ]
 
   const socialLinks = [
-    { href: 'https://instagram.com/nexspace', label: 'Instagram', external: true },
-    { href: 'https://twitter.com/nexspace', label: 'Twitter', external: true },
-    { href: 'https://facebook.com/nexspace', label: 'Facebook', external: true },
+    { href: 'https://instagram.com/nexspot', label: 'Instagram', external: true },
+    { href: 'https://twitter.com/nexspot', label: 'Twitter', external: true },
+    { href: 'https://facebook.com/nexspot', label: 'Facebook', external: true },
   ]
 
   return (
@@ -54,18 +54,18 @@ export default function Footer() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        {/* Top Section - Logo and Book Now */}
+        {/* Top Section - Logo */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-            NEXSPACE®
+            NE<span className="text-[#F5C553] font-extrabold italic">X</span>SPOT®
           </h2>
-          <Link
+          {/* <Link
             href="/booking"
             className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white underline hover:opacity-80 transition-opacity"
             aria-label="Book now"
           >
             Book Now
-          </Link>
+          </Link> */}
         </div>
 
         {/* Divider */}
@@ -138,7 +138,7 @@ export default function Footer() {
         {/* Bottom Row - Copyright and Back to Top */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-6 sm:pt-8 border-t border-gray-800">
           <p className="text-xs sm:text-sm text-gray-400">
-            NEXSPACE© 2025
+            NE<span className="text-[#F5C553] font-bold italic">X</span>SPOT© 2025
           </p>
           <button
             onClick={scrollToTop}

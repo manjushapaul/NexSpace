@@ -109,10 +109,10 @@ export default function AboutUs() {
             Our Story
           </h2>
           <div className="text-center space-y-4 sm:space-y-6 lg:space-y-8">
-            {/* Line 1: "We Created NexSpace To Fill The Gap In" [image] "Kottayam's" */}
+            {/* Line 1: "We Created NexSpot To Fill The Gap In" [image] "Kottayam's" */}
             <p className="text-black text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 
             font-normal leading-tight flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              <span>We Created NexSpace To Fill The Gap In</span>
+              <span>We Created NexSpot To Fill The Gap In</span>
               <Image
                 src="/images/community-image.jpg"
                 alt="Kottayam workspace"
@@ -386,7 +386,7 @@ export default function AboutUs() {
           {/* Glassmorphism CTA Card */}
           <div className="w-full max-w-[420px] mx-auto bg-white/20 backdrop-blur-lg rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/30">
             <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-light text-center mb-4 sm:mb-6">
-              Ready to Join NexSpace?
+              Ready to Join NexSpot?
             </h2>
             <p className="text-white text-base sm:text-lg font-light text-center mb-6 sm:mb-8">
               Experience Kottayam&apos;s most inspiring workspace.
