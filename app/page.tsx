@@ -39,7 +39,7 @@ const structuredData = {
   email: 'nexspotcoworking@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'MG Road, Near Town Hall',
+    streetAddress: 'Near Thiruvathira Temple',
     addressLocality: 'Kottayam',
     addressRegion: 'Kerala',
     postalCode: '686001',
@@ -47,8 +47,8 @@ const structuredData = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 9.5916,
-    longitude: 76.5222,
+    latitude: 9.5961,
+    longitude: 76.5178,
   },
   openingHoursSpecification: [
     {

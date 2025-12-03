@@ -36,13 +36,12 @@ const contactInfoCards: ContactInfoCard[] = [
     heading: 'Visit Us',
     content: [
       'NexSpot Coworking',
-      'MG Road, Near Town Hall',
+      'Near Thiruvathira Temple',
       'Kottayam, Kerala 686001',
-      'India',
     ],
     link: {
       text: 'Get Directions',
-      href: 'https://maps.google.com/?q=NexSpot+Coworking+Kottayam',
+      href: 'https://maps.google.com/?q=Thiruvathira+Temple+Kottayam',
     },
   },
   {
@@ -53,10 +52,10 @@ const contactInfoCards: ContactInfoCard[] = [
       </svg>
     ),
     heading: 'Call Us',
-    content: ['+91 98765 43210', 'Mon-Sat: 9:00 AM - 7:00 PM', 'Sunday: Closed'],
+    content: ['Coming soon', 'Mon-Sat: 9:00 AM - 7:00 PM', 'Sunday: Closed'],
     link: {
       text: 'Call Now',
-      href: 'tel:+919876543210',
+      href: '#',
     },
   },
   {
@@ -814,14 +813,14 @@ export default function Contact() {
             <div className="bg-white/20 backdrop-blur-lg rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/30">
               <div className="rounded-xl overflow-hidden shadow-xl h-full min-h-[500px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.1234567890123!2d76.52123456789012!3d9.591234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMzUnMjguNCJOIDc2wrAzMScyMC4wIkU!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.8763534127753!2d76.5178!3d9.5961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062bdc7b6e2c27%3A0x8e42f5f6f3f0c8c9!2sThiruvathira%20Mahadeva%20Temple%2C%20Thrikkunnapuzha!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: '500px' }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="NexSpot Location Map"
+                  title="NexSpot Location Map - Near Thiruvathira Temple, Kottayam"
                   className="w-full h-full"
                 />
               </div>
