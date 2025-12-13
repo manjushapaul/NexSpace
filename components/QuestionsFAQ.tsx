@@ -17,7 +17,7 @@ const faqData: FAQItem[] = [
     number: '01',
     question: 'How much does a co-working space cost?',
     answer:
-      'Our co-working spaces offer flexible pricing options to suit your needs. Daily passes start from ₹3,000 per day, while monthly memberships are available from ₹15,000 per month. We also offer hourly rates for short-term use, starting at ₹500 per hour. Pricing varies by location and amenities, with premium spaces featuring additional facilities at higher rates. All plans include high-speed Wi-Fi, access to meeting rooms, and complimentary refreshments.',
+      'Our co-working spaces offer flexible pricing options to suit your needs. Daily passes start from ₹200 per day, while monthly memberships are available from ₹5,000 per month. We also offer hourly rates for short-term use, starting at ₹500 per hour. Pricing varies by location and amenities, with premium spaces featuring additional facilities at higher rates. All plans include high-speed Wi-Fi, access to meeting rooms, and complimentary refreshments.',
   },
   {
     id: '2',
