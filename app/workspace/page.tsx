@@ -28,7 +28,7 @@ const workspaces: WorkspaceCard[] = [
     price: '₹200/Day',
     image: '/images/space-1.jpg',
     tags: [
-      { label: '75 Mbps', icon: 'wifi' },
+      { label: '100 Mbps', icon: 'wifi' },
       { label: 'Flexible', icon: 'clock' },
       { label: '₹200/Day', icon: 'currency' },
     ],
@@ -46,7 +46,7 @@ const workspaces: WorkspaceCard[] = [
     price: '₹5,000/Month',
     image: '/images/space-2.jpg',
     tags: [
-      { label: '75 Mbps', icon: 'wifi' },
+      { label: '100 Mbps', icon: 'wifi' },
       { label: 'Reserved', icon: 'lock' },
       { label: '₹5,000/Month', icon: 'currency' },
     ],
@@ -64,7 +64,7 @@ const workspaces: WorkspaceCard[] = [
     price: '₹12,000/Month',
     image: '/images/private-cabin.jpg',
     tags: [
-      { label: '75 Mbps', icon: 'wifi' },
+      { label: '100 Mbps', icon: 'wifi' },
       { label: '2-3 Seats', icon: 'users' },
       { label: '₹12,000/Month', icon: 'currency' },
     ],
@@ -135,7 +135,7 @@ const amenities = [
   {
     id: '1',
     title: 'High-speed WiFi',
-    description: '75 Mbps internet connection',
+    description: '100 Mbps internet connection',
     icon: (
       <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
