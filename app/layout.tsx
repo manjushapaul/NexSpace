@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import BackToTop from '@/components/BackToTop'
+import ChatWidget from '@/components/ChatWidget'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -79,6 +80,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <BackToTop />
+        <ChatWidget />
       </body>
     </html>
   )
