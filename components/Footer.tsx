@@ -36,14 +36,14 @@ export default function Footer() {
 
   const communityLinks = [
     { href: '/#faq', label: 'FAQ' },
-    { href: 'https://twitter.com/nexspot', label: 'Twitter', external: true },
-    { href: 'https://facebook.com/nexspot', label: 'Facebook', external: true },
+    { href: '/#', label: 'Twitter', external: true },
+    { href: '/#', label: 'Facebook', external: true },
   ]
 
   const socialLinks = [
-    { href: 'https://instagram.com/nexspot', label: 'Instagram', external: true },
-    { href: 'https://twitter.com/nexspot', label: 'Twitter', external: true },
-    { href: 'https://facebook.com/nexspot', label: 'Facebook', external: true },
+    { href: '/#', label: 'Instagram', external: true },
+    { href: '/#', label: 'Twitter', external: true },
+    { href: '/#', label: 'Facebook', external: true },
   ]
 
   return (

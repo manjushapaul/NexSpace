@@ -68,6 +68,10 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
+  metadataBase: new URL('https://www.nexspot.in'),
+  alternates: {
+    canonical: '/',
+  },
 }
 
 export default function RootLayout({
